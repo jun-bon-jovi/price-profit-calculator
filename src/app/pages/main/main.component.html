@@ -1,0 +1,127 @@
+<ng-container *ngIf="visible">
+  <table style="border-collapse: collapse;">
+    <tr style="border-bottom: 3px solid #000c;">
+      <td>
+        金額
+      </td>
+      <td>
+        <p-inputNumber inputId="integeronly" [(ngModel)]="amount"></p-inputNumber>
+    </td>
+    </tr>
+    <tr>
+      <td>
+        サービス
+      </td>
+      <td>
+        <p-dropdown
+          [(ngModel)]="service"
+          [options]="services"
+          optionLabel="label"
+          optionValue="value">
+        </p-dropdown>         
+      </td>
+    </tr>
+    <tr>
+      <td>
+        手数料(%)
+      </td>
+      <td>
+        <p-inputNumber
+          [readonly]="true"
+          inputId="integeronly"
+          [ngModel]="feePercentage"
+          [inputStyle]="{ 'background-color': '#cacaca' }"
+        ></p-inputNumber>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        配送方法
+      </td>
+      <td>
+        <p-dropdown
+          [(ngModel)]="shipMethod"
+          [options]="shipMethods"
+          optionLabel="label"
+          optionValue="value">
+        </p-dropdown> 
+      </td>
+    </tr>
+    <tr>
+      <td>
+        配送料
+      </td>
+      <td>
+        <p-inputNumber
+          [readonly]="true"
+          inputId="integeronly"
+          [ngModel]="shipCost"
+          [inputStyle]="{ 'background-color': '#cacaca' }"
+        ></p-inputNumber>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        資材料
+      </td>
+      <td>
+        <p-inputNumber
+          [readonly]="true"
+          inputId="integeronly"
+          [ngModel]="boxCost"
+          [inputStyle]="{ 'background-color': '#cacaca' }"
+        ></p-inputNumber>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        集荷依頼
+      </td>
+      <td>
+        <p-dropdown
+          [(ngModel)]="collection"
+          [options]="collections"
+          optionLabel="label"
+          optionValue="value">
+        </p-dropdown> 
+      </td>
+    </tr>
+    <tr>
+      <td>
+        集荷料
+      </td>
+      <td>
+        <p-inputNumber
+          [readonly]="true"
+          inputId="integeronly"
+          [ngModel]="collectionCost"
+          [inputStyle]="{ 'background-color': '#cacaca' }"
+        ></p-inputNumber>
+      </td>
+    </tr>
+    <tr style="border-bottom: 3px solid #000c;">
+      <td>
+        梱包費等
+      </td>
+      <td>
+        <p-inputNumber inputId="integeronly" [(ngModel)]="packingCost"></p-inputNumber>
+      </td>
+    </tr>
+    <tr style="font-weight: bold;">
+      <td>
+        販売価格
+      </td>
+      <td>
+        <p-inputNumber inputId="integeronly" [ngModel]="price"></p-inputNumber>
+      </td>
+    </tr>
+    <tr style="font-weight: bold;">
+      <td>
+        販売利益
+      </td>
+      <td>
+        <p-inputNumber inputId="integeronly" [ngModel]="profit"></p-inputNumber>
+      </td>
+    </tr>
+  </table>
+</ng-container>
