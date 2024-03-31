@@ -18,7 +18,7 @@
           [options]="services"
           optionLabel="label"
           optionValue="value">
-        </p-dropdown>         
+        </p-dropdown>
       </td>
     </tr>
     <tr>
@@ -44,7 +44,7 @@
           [options]="shipMethods"
           optionLabel="label"
           optionValue="value">
-        </p-dropdown> 
+        </p-dropdown>
       </td>
     </tr>
     <tr>
@@ -83,7 +83,7 @@
           [options]="collections"
           optionLabel="label"
           optionValue="value">
-        </p-dropdown> 
+        </p-dropdown>
       </td>
     </tr>
     <tr>
@@ -112,7 +112,11 @@
         販売価格
       </td>
       <td>
-        <p-inputNumber inputId="integeronly" [ngModel]="price"></p-inputNumber>
+        <p-inputNumber
+          [readonly]="true"
+          inputId="integeronly"
+          [ngModel]="price"
+        ></p-inputNumber>
       </td>
     </tr>
     <tr style="font-weight: bold;">
@@ -120,7 +124,11 @@
         販売利益
       </td>
       <td>
-        <p-inputNumber inputId="integeronly" [ngModel]="profit"></p-inputNumber>
+        <p-inputNumber
+          [readonly]="true"
+          inputId="integeronly"
+          [ngModel]="profit"
+        ></p-inputNumber>
       </td>
     </tr>
   </table>

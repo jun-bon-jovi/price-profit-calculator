@@ -6,8 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 
-import { SERVICE_NAMES, SHIP_METHOD_NAMES, YAMATO_SHIP_METHOD_NAMES } from '../../constants';
-import { SelectOption, type ServiceName, type ShipMethodName } from '../../models';
+import { environment } from '../../../../environments/environment';
+import { SERVICE_NAMES, SHIP_METHOD_NAMES } from '../../constants';
+import type { ServiceName, ShipMethodName } from '../../models';
 import { CalculatorService } from '../../services/calculator.service';
 import { objectToOptionsArray } from '../../utilities/object-to-options-array';
 
@@ -111,9 +112,7 @@ export class MainComponent {
 
   ngOnInit(): void {
     this.route.fragment.subscribe((fragment) => {
-      const b = atob('5543414e');
-      const v = `${btoa(b)}54434d45`;
-      this.visible = isDevMode() || fragment === v;
+      this.visible = isDevMode() || fragment === environment.fragment;
     });
   }
 
