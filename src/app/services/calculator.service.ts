@@ -25,7 +25,7 @@ export class CalculatorService {
    * @param feePercentage 手数料(%)
    */
   getFee(amount: number, feePercentage: number): number {
-    return (amount * feePercentage) / 100;
+    return Math.floor((amount * feePercentage) / 100);
   }
 
   /** 配送料を取得

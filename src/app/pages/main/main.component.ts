@@ -10,6 +10,7 @@ import { environment } from '../../../../environments/environment';
 import { SERVICE_NAMES, SHIP_METHOD_NAMES } from '../../constants';
 import type { ServiceName, ShipMethodName } from '../../models';
 import { CalculatorService } from '../../services/calculator.service';
+import { sha256Hash } from '../../utilities/hash';
 import { objectToOptionsArray } from '../../utilities/object-to-options-array';
 
 @Component({
@@ -111,8 +112,8 @@ export class MainComponent {
   }
 
   ngOnInit(): void {
-    this.route.fragment.subscribe((fragment) => {
-      this.visible = isDevMode() || fragment === environment.fragment;
+    this.route.fragment.subscribe(async (fragment) => {
+      this.visible = fragment ? (await sha256Hash(fragment)) === environment.hash : false;
     });
   }
 
