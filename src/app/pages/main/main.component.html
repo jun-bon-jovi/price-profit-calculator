@@ -1,4 +1,5 @@
 <ng-container *ngIf="visible">
+  <p-toast position="bottom-center"></p-toast>
   <table style="border-collapse: collapse">
     <tr style="border-bottom: 3px solid #000c">
       <td>金額</td>
@@ -46,6 +47,12 @@
           optionValue="value"
           [style]="{ backgroundColor: '#B3E5FC' }"
         >
+          <ng-template let-item pTemplate="item">
+            <div>{{ item.label }}</div>
+            <div style="padding-left: 10px">
+              {{ toLocaleString(item.shipCost) }} 円
+            </div>
+          </ng-template>
         </p-dropdown>
       </td>
     </tr>
@@ -77,11 +84,12 @@
       <td>集荷依頼</td>
       <td>
         <p-dropdown
+          [disabled]="!isCollectable()"
           [(ngModel)]="collection"
           [options]="collections"
           optionLabel="label"
           optionValue="value"
-          [style]="{ backgroundColor: '#B3E5FC' }"
+          [style]="{ backgroundColor: isCollectable() ? '#B3E5FC' : '#BDBDBD' }"
         >
         </p-dropdown>
       </td>
@@ -112,25 +120,41 @@
     <tr style="font-weight: bold">
       <td>販売価格</td>
       <td>
-        <p-inputNumber
-          [readonly]="true"
-          inputId="integeronly"
-          [ngModel]="price"
-          suffix=" 円"
-          [inputStyle]="{ backgroundColor: '#B9F6CA' }"
-        ></p-inputNumber>
+        <div style="display: flex; align-items: center; gap: 5px">
+          <p-inputNumber
+            [readonly]="true"
+            inputId="integeronly"
+            [ngModel]="price"
+            suffix=" 円"
+            [inputStyle]="{ backgroundColor: '#B9F6CA' }"
+          ></p-inputNumber>
+          <p-button
+            label="copy"
+            [outlined]="true"
+            size="small"
+            (click)="copyToClipboard(price)"
+          ></p-button>
+        </div>
       </td>
     </tr>
     <tr style="font-weight: bold">
       <td>販売利益</td>
       <td>
-        <p-inputNumber
-          [readonly]="true"
-          inputId="integeronly"
-          [ngModel]="profit"
-          suffix=" 円"
-          [inputStyle]="{ backgroundColor: '#B9F6CA' }"
-        ></p-inputNumber>
+        <div style="display: flex; align-items: center; gap: 5px">
+          <p-inputNumber
+            [readonly]="true"
+            inputId="integeronly"
+            [ngModel]="profit"
+            suffix=" 円"
+            [inputStyle]="{ backgroundColor: '#B9F6CA' }"
+          ></p-inputNumber
+          ><p-button
+            label="copy"
+            [outlined]="true"
+            size="small"
+            (click)="copyToClipboard(profit)"
+          ></p-button>
+        </div>
       </td>
     </tr>
   </table>

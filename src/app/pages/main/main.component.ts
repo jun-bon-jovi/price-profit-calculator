@@ -3,11 +3,14 @@ import { Component, Inject, isDevMode } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ToastModule } from 'primeng/toast';
 
 import { environment } from '../../../../environments/environment';
-import { SERVICE_NAMES, SHIP_METHOD_NAMES } from '../../constants';
+import { COLLECTABLE_SHIP_METHODS, SERVICE_NAMES, SHIP_METHOD_NAMES } from '../../constants';
 import type { ServiceName, ShipMethodName } from '../../models';
 import { CalculatorService } from '../../services/calculator.service';
 import { sha256Hash } from '../../utilities/hash';
@@ -16,7 +19,15 @@ import { objectToOptionsArray } from '../../utilities/object-to-options-array';
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, InputNumberModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    DropdownModule,
+    InputNumberModule,
+    ToastModule,
+  ],
+  providers: [MessageService],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
@@ -28,7 +39,13 @@ export class MainComponent {
   /** フリマサービス 一覧 */
   services = objectToOptionsArray(SERVICE_NAMES);
   /** 配送方法 */
-  shipMethods = objectToOptionsArray(SHIP_METHOD_NAMES);
+  shipMethods: ReturnType<typeof this.loadShipMethods>;
+  private loadShipMethods() {
+    return objectToOptionsArray(SHIP_METHOD_NAMES).map((item) => ({
+      ...item,
+      shipCost: this.calculator.getShipCost(this.service, item.value),
+    }));
+  }
   /** 集荷依頼 */
   collections = [
     { value: false, label: 'なし' },
@@ -42,7 +59,7 @@ export class MainComponent {
     return this._amount;
   }
   set amount(value) {
-    this._amount = value;
+    this._amount = Math.round(value);
     this.calc();
   }
   private _amount = 300;
@@ -53,6 +70,7 @@ export class MainComponent {
   }
   set service(value: ServiceName) {
     this._service = value;
+    this.shipMethods = this.loadShipMethods();
     this.calc();
   }
   private _service: ServiceName = 'mercari';
@@ -63,6 +81,9 @@ export class MainComponent {
   }
   set shipMethod(value: ShipMethodName) {
     this._shipMethod = value;
+    if (!COLLECTABLE_SHIP_METHODS[value]) {
+      this._collection = false;
+    }
     this.calc();
   }
   private _shipMethod: ShipMethodName = 'jp_yu_packet_post_mini';
@@ -76,6 +97,11 @@ export class MainComponent {
     this.calc();
   }
   private _collection = false;
+
+  /** 集荷依頼可能か */
+  isCollectable(): boolean {
+    return !!COLLECTABLE_SHIP_METHODS[this.shipMethod];
+  }
 
   /** 梱包費 */
   get packingCost() {
@@ -102,13 +128,17 @@ export class MainComponent {
   profit = 0;
 
   private route: ActivatedRoute;
+
   private calculator: CalculatorService;
   constructor(
     @Inject(ActivatedRoute) route: ActivatedRoute,
+    private message: MessageService,
     @Inject(CalculatorService) calculator: CalculatorService,
   ) {
     this.route = route;
     this.calculator = calculator;
+
+    this.shipMethods = this.loadShipMethods();
   }
 
   ngOnInit(): void {
@@ -140,5 +170,26 @@ export class MainComponent {
       this.collectionCost -
       this.boxCost -
       this.packingCost;
+  }
+
+  async copyToClipboard(s: string | number) {
+    try {
+      await navigator.clipboard.writeText(`${s}`);
+      this.message.add({
+        severity: 'success',
+        detail: 'コピーしました',
+        life: 800,
+      });
+    } catch (error) {
+      this.message.add({
+        severity: 'warn',
+        detail: 'コピー非対応のブラウザです',
+        life: 800,
+      });
+    }
+  }
+
+  toLocaleString(n: number) {
+    return n.toLocaleString();
   }
 }

@@ -1,3 +1,5 @@
+import type { ShipMethodName } from '../models';
+
 /** 配送方法名 - 日本郵便 */
 export const JAPAN_POST_SHIP_METHOD_NAMES = {
   jp_yu_packet: 'ゆうパケット',
@@ -33,3 +35,16 @@ export const SHIP_METHOD_NAMES = {
   ...JAPAN_POST_SHIP_METHOD_NAMES,
   ...YAMATO_SHIP_METHOD_NAMES,
 } as const;
+
+/** 集荷依頼可能な配送方法 */
+export const COLLECTABLE_SHIP_METHODS: Readonly<{ [key in ShipMethodName]?: true }> = {
+  y_parcel_compact: true,
+  y_parcel_60: true,
+  y_parcel_80: true,
+  y_parcel_100: true,
+  y_parcel_120: true,
+  y_parcel_140: true,
+  y_parcel_160: true,
+  y_parcel_180: true,
+  y_parcel_200: true,
+};
