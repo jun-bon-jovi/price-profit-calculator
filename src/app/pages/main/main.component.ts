@@ -41,9 +41,9 @@ export class MainComponent {
   /** 配送方法 */
   shipMethods: ReturnType<typeof this.loadShipMethods>;
   private loadShipMethods() {
-    return objectToOptionsArray(SHIP_METHOD_NAMES).map((item) => ({
-      ...item,
-      shipCost: this.calculator.getShipCost(this.service, item.value),
+    return objectToOptionsArray(SHIP_METHOD_NAMES).map((method) => ({
+      ...method,
+      shipCost: this.calculator.getShipCost(this.service, method.value),
     }));
   }
   /** 集荷依頼 */
@@ -128,7 +128,6 @@ export class MainComponent {
   profit = 0;
 
   private route: ActivatedRoute;
-
   private calculator: CalculatorService;
   constructor(
     @Inject(ActivatedRoute) route: ActivatedRoute,
@@ -148,8 +147,6 @@ export class MainComponent {
 
   /** 計算 */
   private calc() {
-    console.log('calc()');
-
     this.feePercentage = this.calculator.getFeePercentage(this.service);
 
     this.shipCost = this.calculator.getShipCost(this.service, this.shipMethod);
