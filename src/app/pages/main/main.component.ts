@@ -3,11 +3,11 @@ import { Component, Inject, isDevMode } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { ToastModule } from 'primeng/toast';
 
 import { environment } from '../../../../environments/environment';
 import { COLLECTABLE_SHIP_METHODS, SERVICE_NAMES, SHIP_METHOD_NAMES } from '../../constants';
@@ -24,10 +24,10 @@ import { objectToOptionsArray } from '../../utilities/object-to-options-array';
     FormsModule,
     ButtonModule,
     DropdownModule,
+    InputGroupModule,
+    InputGroupAddonModule,
     InputNumberModule,
-    ToastModule,
   ],
-  providers: [MessageService],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
@@ -132,7 +132,6 @@ export class MainComponent {
   private calculator: CalculatorService;
   constructor(
     @Inject(ActivatedRoute) route: ActivatedRoute,
-    private message: MessageService,
     @Inject(CalculatorService) calculator: CalculatorService,
   ) {
     this.route = route;
@@ -170,23 +169,6 @@ export class MainComponent {
       this.collectionCost -
       this.boxCost -
       this.packingCost;
-  }
-
-  async copyToClipboard(s: string | number) {
-    try {
-      await navigator.clipboard.writeText(`${s}`);
-      this.message.add({
-        severity: 'success',
-        detail: 'コピーしました',
-        life: 800,
-      });
-    } catch (error) {
-      this.message.add({
-        severity: 'warn',
-        detail: 'コピー非対応のブラウザです',
-        life: 800,
-      });
-    }
   }
 
   toLocaleString(n: number) {
