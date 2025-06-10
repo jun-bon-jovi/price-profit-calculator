@@ -1,32 +1,35 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, isDevMode } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
+import { environment } from 'environments/environment';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { COLLECTABLE_SHIP_METHODS, SERVICE_NAMES, SHIP_METHOD_NAMES } from 'src/app/constants';
+import type { ServiceName, ShipMethodName } from 'src/app/models';
+import { CalculatorService } from 'src/app/services/calculator.service';
+import { sha256Hash } from 'src/app/utilities/hash';
+import { objectToOptionsArray } from 'src/app/utilities/object-to-options-array';
 
-import { environment } from '../../../../environments/environment';
-import { COLLECTABLE_SHIP_METHODS, SERVICE_NAMES, SHIP_METHOD_NAMES } from '../../constants';
-import type { ServiceName, ShipMethodName } from '../../models';
-import { CalculatorService } from '../../services/calculator.service';
-import { sha256Hash } from '../../utilities/hash';
-import { objectToOptionsArray } from '../../utilities/object-to-options-array';
+// import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-main',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ButtonModule,
-    DropdownModule,
+    DialogModule,
     InputGroupModule,
     InputGroupAddonModule,
     InputNumberModule,
+    InputTextModule,
+    SelectModule,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
@@ -38,6 +41,7 @@ export class MainComponent {
 
   /** フリマサービス 一覧 */
   services = objectToOptionsArray(SERVICE_NAMES);
+
   /** 配送方法 */
   shipMethods: ReturnType<typeof this.loadShipMethods>;
   private loadShipMethods() {
@@ -46,6 +50,11 @@ export class MainComponent {
       shipCost: this.calculator.getShipCost(this.service, method.value),
     }));
   }
+
+  get shipMethodName(): string {
+    return SHIP_METHOD_NAMES[this.shipMethod];
+  }
+
   /** 集荷依頼 */
   collections = [
     { value: false, label: 'なし' },
@@ -88,6 +97,9 @@ export class MainComponent {
   }
   private _shipMethod: ShipMethodName = 'jp_yu_packet_post_mini';
 
+  /** 配送方法ダイアログの表示 */
+  visibleShipMethodDialog = false;
+
   /** 集荷依頼 */
   get collection() {
     return this._collection;
@@ -127,21 +139,17 @@ export class MainComponent {
   /** 販売利益 */
   profit = 0;
 
-  private route: ActivatedRoute;
-  private calculator: CalculatorService;
-  constructor(
-    @Inject(ActivatedRoute) route: ActivatedRoute,
-    @Inject(CalculatorService) calculator: CalculatorService,
-  ) {
-    this.route = route;
-    this.calculator = calculator;
+  private readonly route = inject(ActivatedRoute);
+  private readonly calculator = inject(CalculatorService);
 
+  constructor() {
     this.shipMethods = this.loadShipMethods();
   }
 
   ngOnInit(): void {
     this.route.fragment.subscribe(async (fragment) => {
       this.visible = fragment ? (await sha256Hash(fragment)) === environment.hash : false;
+      this.calc();
     });
   }
 

@@ -17,14 +17,14 @@
     <tr>
       <td>サービス</td>
       <td>
-        <p-dropdown
+        <p-select
           [(ngModel)]="service"
           [options]="services"
           optionLabel="label"
           optionValue="value"
           [style]="{ backgroundColor: '#B3E5FC' }"
         >
-        </p-dropdown>
+        </p-select>
       </td>
     </tr>
     <tr>
@@ -44,20 +44,14 @@
     <tr>
       <td>配送方法</td>
       <td>
-        <p-dropdown
-          [(ngModel)]="shipMethod"
-          [options]="shipMethods"
-          optionLabel="label"
-          optionValue="value"
-          [style]="{ backgroundColor: '#B3E5FC' }"
-        >
-          <ng-template let-item pTemplate="item">
-            <div>{{ item.label }}</div>
-            <div style="padding-left: 10px">
-              {{ toLocaleString(item.shipCost) }} 円
-            </div>
-          </ng-template>
-        </p-dropdown>
+        <input
+          type="text"
+          pInputText
+          [value]="shipMethodName"
+          [readOnly]="true"
+          (click)="visibleShipMethodDialog = true"
+          style="cursor: pointer"
+        />
       </td>
     </tr>
     <tr>
@@ -91,7 +85,7 @@
     <tr>
       <td>集荷依頼</td>
       <td>
-        <p-dropdown
+        <p-select
           [disabled]="!isCollectable()"
           [(ngModel)]="collection"
           [options]="collections"
@@ -99,7 +93,7 @@
           optionValue="value"
           [style]="{ backgroundColor: isCollectable() ? '#B3E5FC' : '#BDBDBD' }"
         >
-        </p-dropdown>
+        </p-select>
       </td>
     </tr>
     <tr>
@@ -161,4 +155,23 @@
       </td>
     </tr>
   </table>
+
+  <p-dialog
+    [(visible)]="visibleShipMethodDialog"
+    [modal]="true"
+    [draggable]="false"
+    [style]="{ maxWidth: '100vw', maxHeight: '100vh' }"
+  >
+    <ng-template #header>
+      <div>配送方法の選択</div>
+    </ng-template>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px">
+      <ng-container *ngFor="let item of shipMethods">
+        <p-button
+          [label]="item.label + ' - ' + toLocaleString(item.shipCost) + '円'"
+          (onClick)="shipMethod = item.value; visibleShipMethodDialog = false"
+        />
+      </ng-container>
+    </div>
+  </p-dialog>
 </ng-container>

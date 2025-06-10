@@ -1,8 +1,4 @@
-import type {
-  JAPAN_POST_SHIP_METHOD_NAMES,
-  SHIP_METHOD_NAMES,
-  YAMATO_SHIP_METHOD_NAMES,
-} from '../constants';
+import type { JAPAN_POST_SHIP_METHOD_NAMES, SHIP_METHOD_NAMES, YAMATO_SHIP_METHOD_NAMES } from '../constants';
 
 /** 配送方法名 - 全て */
 export type ShipMethodName = keyof typeof SHIP_METHOD_NAMES;

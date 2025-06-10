@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {
-  BOX_COST,
-  COLLECTION_COST,
-  FEE_PERCENTAGE,
-  MERCARI_SHIP_COST,
-  YAHOO_SHIP_COST,
-} from '../constants';
+import { BOX_COST, COLLECTION_COST, FEE_PERCENTAGE, MERCARI_SHIP_COST, YAHOO_SHIP_COST } from '../constants';
 import type { ServiceName, ShipMethodName } from '../models';
 
 @Injectable({
