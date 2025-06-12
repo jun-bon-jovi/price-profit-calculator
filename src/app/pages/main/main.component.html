@@ -165,7 +165,7 @@
     <ng-template #header>
       <div>配送方法の選択</div>
     </ng-template>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px">
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px">
       <ng-container *ngFor="let item of shipMethods">
         <p-button
           [label]="item.label + ' - ' + toLocaleString(item.shipCost) + '円'"
