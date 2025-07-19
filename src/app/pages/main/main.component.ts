@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
@@ -15,8 +15,6 @@ import type { ServiceName, ShipMethodName } from 'src/app/models';
 import { CalculatorService } from 'src/app/services/calculator.service';
 import { sha256Hash } from 'src/app/utilities/hash';
 import { objectToOptionsArray } from 'src/app/utilities/object-to-options-array';
-
-// import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-main',
@@ -126,8 +124,8 @@ export class MainComponent {
   private _packingCost = 0;
 
   // --- 出力 ---
-  /** 手数料(%) */
-  feePercentage = 0;
+  /** 手数料(%) - 計算に使わない */
+  feePercentage_DO_NOT_USE_FOR_CALC = 0;
   /** 配送料 */
   shipCost = 0;
   /** 集荷料 */
@@ -155,25 +153,31 @@ export class MainComponent {
 
   /** 計算 */
   private calc() {
-    this.feePercentage = this.calculator.getFeePercentage(this.service);
+    this.feePercentage_DO_NOT_USE_FOR_CALC = this.calculator.getFeePercentage(this.service);
 
     this.shipCost = this.calculator.getShipCost(this.service, this.shipMethod);
     this.collectionCost = this.calculator.getCollectionCost(this.service, this.collection);
     this.boxCost = this.calculator.getBoxCost(this.shipMethod);
 
     // 販売価格
-    this.price =
-      (this.amount + this.shipCost + this.collectionCost + this.boxCost + this.packingCost) /
-      (1 - this.feePercentage / 100);
+    this.price = this.calculator.calcPrice({
+      service: this.service,
+      profit: this.amount,
+      shipCost: this.shipCost,
+      collectionCost: this.collectionCost,
+      boxCost: this.boxCost,
+      packingCost: this.packingCost,
+    });
 
     // 販売利益
-    this.profit =
-      this.amount -
-      this.calculator.getFee(this.amount, this.feePercentage) -
-      this.shipCost -
-      this.collectionCost -
-      this.boxCost -
-      this.packingCost;
+    this.profit = this.calculator.calcProfit({
+      service: this.service,
+      price: this.amount,
+      shipCost: this.shipCost,
+      collectionCost: this.collectionCost,
+      boxCost: this.boxCost,
+      packingCost: this.packingCost,
+    });
   }
 
   toLocaleString(n: number) {

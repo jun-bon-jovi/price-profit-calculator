@@ -34,7 +34,7 @@
           <p-inputNumber
             [disabled]="true"
             inputId="integeronly"
-            [ngModel]="feePercentage"
+            [ngModel]="feePercentage_DO_NOT_USE_FOR_CALC"
             [inputStyle]="{ color: 'black' }"
           ></p-inputNumber>
           <p-inputGroupAddon>%</p-inputGroupAddon>
@@ -165,7 +165,15 @@
     <ng-template #header>
       <div>配送方法の選択</div>
     </ng-template>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px">
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 10px;
+      "
+    >
       <ng-container *ngFor="let item of shipMethods">
         <p-button
           [label]="item.label + ' - ' + toLocaleString(item.shipCost) + '円'"
