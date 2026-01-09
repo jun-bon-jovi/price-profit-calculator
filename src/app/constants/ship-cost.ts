@@ -44,11 +44,11 @@ export const MERCARI_SHIP_COST: Readonly<{ [key in ShipMethodName]: number }> = 
  * - https://paypayfleamarket.yahoo.co.jp/contents/shipping
  */
 const YAHOO_JP_SHIP_COST: Readonly<{ [key in JapanPostShipMethodName]: number }> = {
-  jp_yu_packet: 205,
-  jp_yu_packet_post_box: 200,
-  jp_yu_packet_post_sticker: 200,
-  jp_yu_packet_post_mini: 150,
-  jp_yu_packet_plus: 380,
+  jp_yu_packet: 215,
+  jp_yu_packet_post_box: 210,
+  jp_yu_packet_post_sticker: 210,
+  jp_yu_packet_post_mini: 160,
+  jp_yu_packet_plus: 410,
   jp_yu_pack_60: 750,
   jp_yu_pack_80: 850,
   jp_yu_pack_100: 1050,
@@ -62,8 +62,8 @@ const YAHOO_JP_SHIP_COST: Readonly<{ [key in JapanPostShipMethodName]: number }>
  * - https://paypayfleamarket.yahoo.co.jp/contents/shipping
  */
 const YAHOO_Y_SHIP_COST: Readonly<{ [key in YamatoShipMethodName]: number }> = {
-  y_nekopos: 200,
-  y_parcel_compact: 450,
+  y_nekopos: 210,
+  y_parcel_compact: 490,
   y_parcel_60: 750,
   y_parcel_80: 850,
   y_parcel_100: 1050,
