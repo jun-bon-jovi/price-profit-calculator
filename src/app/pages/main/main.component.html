@@ -173,7 +173,7 @@
         margin-bottom: 10px;
       "
     >
-      @for (item of shipMethods; track item) {
+      @for (item of shipMethods; track $index) {
         <p-button
           [label]="item.label + ' - ' + toLocaleString(item.shipCost) + '円'"
           (onClick)="shipMethod = item.value; visibleShipMethodDialog = false"

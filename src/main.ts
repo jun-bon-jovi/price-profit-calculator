@@ -1,5 +1,11 @@
+import { provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
-import { appConfig } from './app/app.config';
+import { provideRouter } from '@angular/router';
+import lara from '@primeuix/themes/lara';
+import { providePrimeNG } from 'primeng/config';
+import { AppComponent } from 'src/app/app.component';
+import { routes } from 'src/app/app.routes';
 
-bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [provideZoneChangeDetection(), provideRouter(routes), providePrimeNG({ theme: { preset: lara } })],
+}).catch((err) => console.error(err));
