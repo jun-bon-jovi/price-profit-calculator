@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration development",
-    "build": "ng build",
-    "deploy": "ng deploy --base-href=\"/price-profit-calculator/\"",
+    "start": "node set-env.mjs && ng serve",
+    "build": "node set-env.mjs && ng build",
+    "build:production": "node set-env.mjs && ng build --configuration production",
     "test": "ng test",
     "check": "biome check src/ --write"
   },
@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^21.2.8",
     "@angular/router": "^21.2.8",
     "@primeuix/themes": "^2.0.3",
+    "dotenv": "^17.4.2",
     "primeng": "^21.1.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

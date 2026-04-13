@@ -1,7 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { environment } from 'environments/environment';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -12,7 +10,6 @@ import { SelectModule } from 'primeng/select';
 import { COLLECTABLE_SHIP_METHODS, SERVICE_NAMES, SHIP_METHOD_NAMES } from 'src/app/constants';
 import type { ServiceName, ShipMethodName } from 'src/app/models';
 import { CalculatorService } from 'src/app/services/calculator.service';
-import { sha256Hash } from 'src/app/utilities/hash';
 import { objectToOptionsArray } from 'src/app/utilities/object-to-options-array';
 
 @Component({
@@ -31,8 +28,6 @@ import { objectToOptionsArray } from 'src/app/utilities/object-to-options-array'
   styleUrl: './main.component.scss',
 })
 export class MainComponent {
-  visible = false;
-
   // --- 選択肢 ---
 
   /** フリマサービス 一覧 */
@@ -135,7 +130,6 @@ export class MainComponent {
   /** 販売利益 */
   profit = 0;
 
-  private readonly route = inject(ActivatedRoute);
   private readonly calculator = inject(CalculatorService);
 
   constructor() {
@@ -143,10 +137,7 @@ export class MainComponent {
   }
 
   ngOnInit(): void {
-    this.route.fragment.subscribe(async (fragment) => {
-      this.visible = fragment ? (await sha256Hash(fragment)) === environment.hash : false;
-      this.calc();
-    });
+    this.calc();
   }
 
   /** 計算 */

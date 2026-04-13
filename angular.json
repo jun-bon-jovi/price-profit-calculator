@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/price-profit-calculator",
+            "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -32,7 +32,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "800kb",
                   "maximumError": "1mb"
                 },
                 {

@@ -1,184 +1,182 @@
-@if (visible) {
-  <table style="border-collapse: collapse">
-    <tr style="border-bottom: 3px solid #000c">
-      <td>金額</td>
-      <td>
-        <p-inputGroup>
-          <p-inputNumber
-            inputId="integeronly"
-            [min]="0"
-            [(ngModel)]="amount"
-            [inputStyle]="{ backgroundColor: '#B3E5FC' }"
-          ></p-inputNumber>
-          <p-inputGroupAddon>円</p-inputGroupAddon>
-        </p-inputGroup>
-      </td>
-    </tr>
-    <tr>
-      <td>サービス</td>
-      <td>
-        <p-select
-          [(ngModel)]="service"
-          [options]="services"
-          optionLabel="label"
-          optionValue="value"
-          [style]="{ backgroundColor: '#B3E5FC' }"
-        >
-        </p-select>
-      </td>
-    </tr>
-    <tr>
-      <td>手数料</td>
-      <td>
-        <p-inputGroup>
-          <p-inputNumber
-            [disabled]="true"
-            inputId="integeronly"
-            [ngModel]="feePercentage_DO_NOT_USE_FOR_CALC"
-            [inputStyle]="{ color: 'black' }"
-          ></p-inputNumber>
-          <p-inputGroupAddon>%</p-inputGroupAddon>
-        </p-inputGroup>
-      </td>
-    </tr>
-    <tr>
-      <td>配送方法</td>
-      <td>
-        <input
-          type="text"
-          pInputText
-          [value]="shipMethodName"
-          [readOnly]="true"
-          (click)="visibleShipMethodDialog = true"
-          style="cursor: pointer"
-        />
-      </td>
-    </tr>
-    <tr>
-      <td>配送料</td>
-      <td>
-        <p-inputGroup>
-          <p-inputNumber
-            [disabled]="true"
-            inputId="integeronly"
-            [ngModel]="shipCost"
-            [inputStyle]="{ color: 'black' }"
-          ></p-inputNumber>
-          <p-inputGroupAddon>円</p-inputGroupAddon>
-        </p-inputGroup>
-      </td>
-    </tr>
-    <tr>
-      <td>資材料</td>
-      <td>
-        <p-inputGroup>
-          <p-inputNumber
-            [disabled]="true"
-            inputId="integeronly"
-            [ngModel]="boxCost"
-            [inputStyle]="{ color: 'black' }"
-          ></p-inputNumber>
-          <p-inputGroupAddon>円</p-inputGroupAddon>
-        </p-inputGroup>
-      </td>
-    </tr>
-    <tr>
-      <td>集荷依頼</td>
-      <td>
-        <p-select
-          [disabled]="!isCollectable()"
-          [(ngModel)]="collection"
-          [options]="collections"
-          optionLabel="label"
-          optionValue="value"
-          [style]="{ backgroundColor: isCollectable() ? '#B3E5FC' : '#BDBDBD' }"
-        >
-        </p-select>
-      </td>
-    </tr>
-    <tr>
-      <td>集荷料</td>
-      <td>
-        <p-inputGroup>
-          <p-inputNumber
-            [disabled]="true"
-            inputId="integeronly"
-            [ngModel]="collectionCost"
-            [inputStyle]="{ color: 'black' }"
-          ></p-inputNumber>
-          <p-inputGroupAddon>円</p-inputGroupAddon>
-        </p-inputGroup>
-      </td>
-    </tr>
-    <tr style="border-bottom: 3px solid #000c">
-      <td>梱包費等</td>
-      <td>
-        <p-inputGroup>
-          <p-inputNumber
-            inputId="integeronly"
-            [min]="0"
-            [(ngModel)]="packingCost"
-            [inputStyle]="{ backgroundColor: '#B3E5FC' }"
-          ></p-inputNumber>
-          <p-inputGroupAddon>円</p-inputGroupAddon>
-        </p-inputGroup>
-      </td>
-    </tr>
-    <tr>
-      <td style="font-weight: bold">販売価格</td>
-      <td>
+<table style="border-collapse: collapse">
+  <tr style="border-bottom: 3px solid #000c">
+    <td>金額</td>
+    <td>
+      <p-inputGroup>
+        <p-inputNumber
+          inputId="integeronly"
+          [min]="0"
+          [(ngModel)]="amount"
+          [inputStyle]="{ backgroundColor: '#B3E5FC' }"
+        ></p-inputNumber>
+        <p-inputGroupAddon>円</p-inputGroupAddon>
+      </p-inputGroup>
+    </td>
+  </tr>
+  <tr>
+    <td>サービス</td>
+    <td>
+      <p-select
+        [(ngModel)]="service"
+        [options]="services"
+        optionLabel="label"
+        optionValue="value"
+        [style]="{ backgroundColor: '#B3E5FC' }"
+      >
+      </p-select>
+    </td>
+  </tr>
+  <tr>
+    <td>手数料</td>
+    <td>
+      <p-inputGroup>
+        <p-inputNumber
+          [disabled]="true"
+          inputId="integeronly"
+          [ngModel]="feePercentage_DO_NOT_USE_FOR_CALC"
+          [inputStyle]="{ color: 'black' }"
+        ></p-inputNumber>
+        <p-inputGroupAddon>%</p-inputGroupAddon>
+      </p-inputGroup>
+    </td>
+  </tr>
+  <tr>
+    <td>配送方法</td>
+    <td>
+      <input
+        type="text"
+        pInputText
+        [value]="shipMethodName"
+        [readOnly]="true"
+        (click)="visibleShipMethodDialog = true"
+        style="cursor: pointer"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>配送料</td>
+    <td>
+      <p-inputGroup>
+        <p-inputNumber
+          [disabled]="true"
+          inputId="integeronly"
+          [ngModel]="shipCost"
+          [inputStyle]="{ color: 'black' }"
+        ></p-inputNumber>
+        <p-inputGroupAddon>円</p-inputGroupAddon>
+      </p-inputGroup>
+    </td>
+  </tr>
+  <tr>
+    <td>資材料</td>
+    <td>
+      <p-inputGroup>
+        <p-inputNumber
+          [disabled]="true"
+          inputId="integeronly"
+          [ngModel]="boxCost"
+          [inputStyle]="{ color: 'black' }"
+        ></p-inputNumber>
+        <p-inputGroupAddon>円</p-inputGroupAddon>
+      </p-inputGroup>
+    </td>
+  </tr>
+  <tr>
+    <td>集荷依頼</td>
+    <td>
+      <p-select
+        [disabled]="!isCollectable()"
+        [(ngModel)]="collection"
+        [options]="collections"
+        optionLabel="label"
+        optionValue="value"
+        [style]="{ backgroundColor: isCollectable() ? '#B3E5FC' : '#BDBDBD' }"
+      >
+      </p-select>
+    </td>
+  </tr>
+  <tr>
+    <td>集荷料</td>
+    <td>
+      <p-inputGroup>
+        <p-inputNumber
+          [disabled]="true"
+          inputId="integeronly"
+          [ngModel]="collectionCost"
+          [inputStyle]="{ color: 'black' }"
+        ></p-inputNumber>
+        <p-inputGroupAddon>円</p-inputGroupAddon>
+      </p-inputGroup>
+    </td>
+  </tr>
+  <tr style="border-bottom: 3px solid #000c">
+    <td>梱包費等</td>
+    <td>
+      <p-inputGroup>
+        <p-inputNumber
+          inputId="integeronly"
+          [min]="0"
+          [(ngModel)]="packingCost"
+          [inputStyle]="{ backgroundColor: '#B3E5FC' }"
+        ></p-inputNumber>
+        <p-inputGroupAddon>円</p-inputGroupAddon>
+      </p-inputGroup>
+    </td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold">販売価格</td>
+    <td>
+      <p-inputGroup>
+        <p-inputNumber
+          [readonly]="true"
+          inputId="integeronly"
+          [ngModel]="price"
+          [inputStyle]="{ backgroundColor: '#B9F6CA' }"
+        ></p-inputNumber>
+        <p-inputGroupAddon>円</p-inputGroupAddon>
+      </p-inputGroup>
+    </td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold" valign="top">販売利益</td>
+    <td>
+      <div style="display: flex; align-items: center; gap: 5px">
         <p-inputGroup>
           <p-inputNumber
             [readonly]="true"
             inputId="integeronly"
-            [ngModel]="price"
+            [ngModel]="profit"
             [inputStyle]="{ backgroundColor: '#B9F6CA' }"
           ></p-inputNumber>
           <p-inputGroupAddon>円</p-inputGroupAddon>
         </p-inputGroup>
-      </td>
-    </tr>
-    <tr>
-      <td style="font-weight: bold" valign="top">販売利益</td>
-      <td>
-        <div style="display: flex; align-items: center; gap: 5px">
-          <p-inputGroup>
-            <p-inputNumber
-              [readonly]="true"
-              inputId="integeronly"
-              [ngModel]="profit"
-              [inputStyle]="{ backgroundColor: '#B9F6CA' }"
-            ></p-inputNumber>
-            <p-inputGroupAddon>円</p-inputGroupAddon>
-          </p-inputGroup>
-        </div>
-      </td>
-    </tr>
-  </table>
-  <p-dialog
-    [(visible)]="visibleShipMethodDialog"
-    [modal]="true"
-    [draggable]="false"
-    [style]="{ maxWidth: '100vw', maxHeight: '100vh' }"
+      </div>
+    </td>
+  </tr>
+</table>
+<p-dialog
+  [(visible)]="visibleShipMethodDialog"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ maxWidth: '100vw', maxHeight: '100vh' }"
+>
+  <ng-template #header>
+    <div>配送方法の選択</div>
+  </ng-template>
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    "
   >
-    <ng-template #header>
-      <div>配送方法の選択</div>
-    </ng-template>
-    <div
-      style="
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 10px;
-      "
-    >
-      @for (item of shipMethods; track $index) {
-        <p-button
-          [label]="item.label + ' - ' + toLocaleString(item.shipCost) + '円'"
-          (onClick)="shipMethod = item.value; visibleShipMethodDialog = false"
-        />
-      }
-    </div>
-  </p-dialog>
-}
+    @for (item of shipMethods; track $index) {
+      <p-button
+        [label]="item.label + ' - ' + toLocaleString(item.shipCost) + '円'"
+        (onClick)="shipMethod = item.value; visibleShipMethodDialog = false"
+      />
+    }
+  </div>
+</p-dialog>
