@@ -1,4 +1,4 @@
-<ng-container *ngIf="visible">
+@if (visible) {
   <table style="border-collapse: collapse">
     <tr style="border-bottom: 3px solid #000c">
       <td>金額</td>
@@ -155,7 +155,6 @@
       </td>
     </tr>
   </table>
-
   <p-dialog
     [(visible)]="visibleShipMethodDialog"
     [modal]="true"
@@ -174,12 +173,12 @@
         margin-bottom: 10px;
       "
     >
-      <ng-container *ngFor="let item of shipMethods">
+      @for (item of shipMethods; track item) {
         <p-button
           [label]="item.label + ' - ' + toLocaleString(item.shipCost) + '円'"
           (onClick)="shipMethod = item.value; visibleShipMethodDialog = false"
         />
-      </ng-container>
+      }
     </div>
   </p-dialog>
-</ng-container>
+}

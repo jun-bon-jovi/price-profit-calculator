@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +18,6 @@ import { objectToOptionsArray } from 'src/app/utilities/object-to-options-array'
 @Component({
   selector: 'app-main',
   imports: [
-    CommonModule,
     FormsModule,
     ButtonModule,
     DialogModule,
